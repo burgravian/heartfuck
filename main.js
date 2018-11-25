@@ -4,7 +4,7 @@ function runHeartfuckToBrainfuck(){
   for(i = 0; i < string.length; i++){
     console.log(i + ": " + string.charCodeAt(i));
     
-    // < > + - 
+    // < > + [ ]
     if(string.charCodeAt(i) === 55357){
       // >
       if(string.charCodeAt(i + 1) === 56471){
@@ -56,6 +56,14 @@ function runHeartfuckToBrainfuck(){
       }
     }
     
+    // - 
+      else if(string.charCodeAt(i) === 10084){
+        if(string.charCodeAt(i + 1) === 65039){
+          i++;
+          output += "-";
+        }
+      }
+      
     // ,
     else if(string.charCodeAt(i) === 10083){
       if(string.charCodeAt(i + 1) === 65039){
@@ -83,7 +91,7 @@ function runBrainfuckToHeartfuck(){
         output += "💖";
         break;
       case "-":
-        output += "💚";
+        output += "❤️";
         break;
       case ".":
         output += "💌";
