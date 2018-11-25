@@ -10,14 +10,27 @@
 
 <body>
   <h2>Heartfuck</h2>
+  
+  
   <p>
     💗💜💖💚💌❣️💛💙<br><br>
-    Enter text:<br>
-    <textarea type='text' id='heartfuck'></textarea><br>
-    <button onclick="run()">hello</button>
+    Enter heartfuck to convert to brainfuck:<br>
+    <textarea type='text' id='heartfuckToBrainfuck'></textarea><br>
+    <button onclick="runHeartfuckToBrainfuck()">Convert to brainfuck</button>
   </p>
-  <p id="output">
+  
+  
+  <p>
+    Enter brainfuck to convert to brainfuck:<br>
+    <textarea type='text' id='brainfuckToHeartfuck'></textarea><br>
+    <button onclick="runBrainfuckToHeartfuck()">Convert to brainfuck</button>
   </p>
+  
+  
+  <p id="output"></p>
+  
+  
+  
   <script src="main.js"></script>
 </body>
 </html>

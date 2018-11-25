@@ -1,6 +1,6 @@
-function run(){
+function runHeartfuckToBrainfuck(){
   var output = "";
-  var string = document.getElementById('heartfuck').value;
+  var string = document.getElementById('heartfuckToBrainfuck').value;
   for(i = 0; i < string.length; i++){
     console.log(i + ": " + string.charCodeAt(i));
     
@@ -63,6 +63,42 @@ function run(){
         output += ",";
       }
     }    
+  }
+  document.getElementById('output').innerHTML = output;
+}
+
+
+function runBrainfuckToHeartfuck(){
+  var output = "";
+  var string = document.getElementById('brainfuckToHeartfuck').value;
+  for(i = 0; i < string.length; i++){
+    switch(string.charAt(i)){
+      case ">":
+        output += "💗";
+        break;
+      case "<":
+        output += "💜";
+        break;
+      case "+":
+        output += "💖";
+        break;
+      case "-":
+        output += "💚";
+        break;
+      case ".":
+        output += "💌";
+        break;   
+      case ",":
+        output += "❣️";
+        break; 
+      case "[":
+        output += "💛";
+        break;   
+      case "]":
+        output += "💙";
+        break; 
+    }
+    
   }
   document.getElementById('output').innerHTML = output;
 }
