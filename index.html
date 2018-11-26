@@ -10,26 +10,38 @@
 
 <body>
   <h2>Heartfuck</h2>
-  
-  
+
+
   <p>
     Enter heartfuck to convert to brainfuck:<br>
     <textarea type='text' id='heartfuckToBrainfuck'></textarea><br>
-    <button onclick="runHeartfuckToBrainfuck()">Convert to brainfuck</button>
+    <button onclick="runHeartfuckToBrainfuck(-1)">Convert to brainfuck</button>
   </p>
-  
-  
+
+
   <p>
     Enter brainfuck to convert to heartfuck:<br>
     <textarea type='text' id='brainfuckToHeartfuck'></textarea><br>
     <button onclick="runBrainfuckToHeartfuck()">Convert to heartfuck</button>
   </p>
-  
-  
+
+  <p>
+    Enter heartfuck to interpret:<br>
+    <textarea type='text' id='interpretHeartfuck'></textarea><br>
+    <button onclick="interpretHeartfuck()">Interpret</button>
+  </p>
+
+  <p>
+    Enter brainfuck to interpret:<br>
+    <textarea type='text' id='interpretBrainfuck'></textarea><br>
+    <button onclick="interpretBrainfuck(-1)">Interpret</button>
+  </p>
+
+
   <p id="output"></p>
-  
-  
-  
+
+
+
   <script src="main.js"></script>
 </body>
 </html>
