@@ -158,7 +158,6 @@ function interpretBrainfuck(input) {
         data[pointer]--;
         break;
       case ".":
-        console.log(String.fromCharCode(data[pointer]));
         output += String.fromCharCode(data[pointer]);
         break;
       case ",":
