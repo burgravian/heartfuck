@@ -1,3 +1,18 @@
+@font-face {
+    font-family: hearts;
+    src: url(Filxgirl.tff);
+}
+
+body{
+    font-family: "Arial", Arial, Sans-serif;
+}
+
+.title{
+    text-align: center;
+    font-size: 50px;
+    font-family: hearts;
+}
+
 .row {
     display: flex;
 }

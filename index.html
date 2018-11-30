@@ -12,33 +12,32 @@
 <body>
   <div class="row">
     <div class="column">
-      <h2>Heartfuck</h2>
+      <h1 class="title">HEARTFUCK</h2>
+
+        <p>
+          Enter heartfuck to convert to brainfuck:<br>
+          <textarea type='text' id='heartfuckToBrainfuck' rows="4" cols="75"></textarea><br>
+          <button onclick="runHeartfuckToBrainfuck(-1)">Convert to brainfuck</button>
+        </p>
 
 
-      <p>
-        Enter heartfuck to convert to brainfuck:<br>
-        <textarea type='text' id='heartfuckToBrainfuck' rows="4" cols="75"></textarea><br>
-        <button onclick="runHeartfuckToBrainfuck(-1)">Convert to brainfuck</button>
-      </p>
+        <p>
+          Enter brainfuck to convert to heartfuck:<br>
+          <textarea type='text' id='brainfuckToHeartfuck' rows="4" cols="75"></textarea><br>
+          <button onclick="runBrainfuckToHeartfuck()">Convert to heartfuck</button>
+        </p>
 
+        <p>
+          Enter heartfuck to interpret:<br>
+          <textarea type='text' id='interpretHeartfuck' rows="4" cols="75"></textarea><br>
+          <button onclick="interpretHeartfuck()">Interpret</button>
+        </p>
 
-      <p>
-        Enter brainfuck to convert to heartfuck:<br>
-        <textarea type='text' id='brainfuckToHeartfuck' rows="4" cols="75"></textarea><br>
-        <button onclick="runBrainfuckToHeartfuck()">Convert to heartfuck</button>
-      </p>
-
-      <p>
-        Enter heartfuck to interpret:<br>
-        <textarea type='text' id='interpretHeartfuck' rows="4" cols="75"></textarea><br>
-        <button onclick="interpretHeartfuck()">Interpret</button>
-      </p>
-
-      <p>
-        Enter brainfuck to interpret:<br>
-        <textarea type='text' id='interpretBrainfuck' rows="4" cols="75"></textarea><br>
-        <button onclick="interpretBrainfuck(-1)">Interpret</button>
-      </p>
+        <p>
+          Enter brainfuck to interpret:<br>
+          <textarea type='text' id='interpretBrainfuck' rows="4" cols="75"></textarea><br>
+          <button onclick="interpretBrainfuck(-1)">Interpret</button>
+        </p>
     </div>
 
     <div class="column">
