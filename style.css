@@ -20,3 +20,7 @@ body{
 .column {
     flex: 50%;
 }
+
+#output{
+    word-break: break-all;
+}
