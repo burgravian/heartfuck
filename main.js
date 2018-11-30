@@ -32,13 +32,6 @@ function runHeartfuckToBrainfuck(string) {
         output += "+";
       }
 
-      // -
-      else if (string.charCodeAt(i + 1) === 56474) {
-        i++;
-        console.log(i + ": " + string.charCodeAt(i));
-        output += "-";
-      }
-
       //.
       else if (string.charCodeAt(i + 1) === 56460) {
         i++;
@@ -120,11 +113,13 @@ function runBrainfuckToHeartfuck() {
   return output;
 }
 
+/*
 function interpretHeartfuck() {
   var input = document.getElementById('interpretHeartfuck').value;
   input = runHeartfuckToBrainfuck(input);
   interpretBrainfuck(input);
 }
+*/
 
 function interpretBrainfuck(input) {
   var data = [];
@@ -160,6 +155,73 @@ function interpretBrainfuck(input) {
       case "]":
         close(data, pointer);
         break;
+    }
+  }
+}
+
+
+function interpretHeartfuck() {
+  var data = [];
+  var pointer = 0;
+  var string = document.getElementById('interpretHeartfuck').value;
+
+  document.getElementById('output').innerHTML = "";
+
+  for (i = 0; i < string.length; i++) {
+    console.log(i);
+    // < > + [ ]
+    if (string.charCodeAt(i) === 55357) {
+      // >
+      if (string.charCodeAt(i + 1) === 56471) {
+        i++;
+        pointer = pointRight(data, pointer);
+      }
+
+      // <
+      else if (string.charCodeAt(i + 1) === 56476) {
+        i++;
+        pointer = pointLeft(data, pointer);
+      }
+
+      // +
+      else if (string.charCodeAt(i + 1) === 56470) {
+        i++;
+        plus(data, pointer);
+      }
+
+      //.
+      else if (string.charCodeAt(i + 1) === 56460) {
+        i++;
+        dot(data, pointer);
+      }
+
+      // [
+      else if (string.charCodeAt(i + 1) === 56475) {
+        i++;
+        open(data, pointer);
+      }
+
+      // ]
+      else if (string.charCodeAt(i + 1) === 56473) {
+        i++;
+        close(data, pointer);
+      }
+    }
+
+    // -
+    else if (string.charCodeAt(i) === 10084) {
+      if (string.charCodeAt(i + 1) === 65039) {
+        i++;
+        minus(data, pointer);
+      }
+    }
+
+    // ,
+    else if (string.charCodeAt(i) === 10083) {
+      if (string.charCodeAt(i + 1) === 65039) {
+        i++;
+        comma(data, pointer);
+      }
     }
   }
 }
