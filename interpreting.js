@@ -38,13 +38,3 @@ function open(data, pointer) {
 function close(data, pointer) {
     document.getElementById('output').innerHTML += "💙NOT IMPLEMENTED💙";
 }
-
-
-
-
-
-
-
-
-
-
