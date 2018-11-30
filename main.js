@@ -126,51 +126,40 @@ function interpretHeartfuck() {
   interpretBrainfuck(input);
 }
 
-
-
 function interpretBrainfuck(input) {
   var data = [];
   var pointer = 0;
-  var output = "";
 
+  document.getElementById('output').innerHTML = "";
   if (input == -1) {
     input = document.getElementById('interpretBrainfuck').value;
   }
   for (i = 0; i < input.length; i++) {
     switch (input.charAt(i)) {
       case ">":
-        data[pointer] = data[pointer] || 0;
-        pointer++;
+        pointer = pointRight(data, pointer);
         break;
       case "<":
-        data[pointer] = data[pointer] || 0;
-        pointer--;
-        if (pointer < 0) {
-          pointer = 0;
-        }
+        pointer = pointLeft(data, pointer);
         break;
       case "+":
-        data[pointer] = data[pointer] || 0;
-        data[pointer]++;
+        plus(data, pointer);
         break;
       case "-":
-        data[pointer] = data[pointer] || 0;
-        data[pointer]--;
+        minus(data, pointer);
         break;
       case ".":
-        output += String.fromCharCode(data[pointer]);
+        dot(data, pointer);
         break;
       case ",":
-        output += "❣️";
+        comma(data, pointer);
         break;
       case "[":
-        output += "💛NOT IMPLEMENTED💛";
+        open(data, pointer);
         break;
       case "]":
-        output += "💙NOT IMPLEMENTED💙";
+        close(data, pointer);
         break;
     }
-
   }
-  document.getElementById('output').innerHTML = output;
 }
