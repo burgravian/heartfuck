@@ -73,6 +73,6 @@ function close(data, pointer,input) {
                 depthCounter++;
             }
         }
-    }
+    } 
     return i;
 }
