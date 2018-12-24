@@ -45,7 +45,7 @@ function open(data, pointer, input, i) {
                 console.log("found unmatched [");
                 depthCounter++;
             }
-            if((input.charCodeAt(i)===55357) && (input.charCodeAt(i+1)===56475)){
+            if((input.charCodeAt(i)===55357) && (input.charCodeAt(i+1)===56473)){
                 i++;
                 console.log("found matching ]");
                 depthCounter--;
@@ -62,12 +62,12 @@ function close(data, pointer,input) {
         console.log("found an end loop at "+i);
         while(depthCounter!==0){
             i--;
-            if((input.charCodeAt(i)===55357) && (input.charCodeAt(i+1)===56475)){
+            if((input.charCodeAt(i)===56475) && (input.charCodeAt(i-1)===55357)){
                 i--;
                 console.log("found matching [");
                 depthCounter--;
             }
-            if((input.charCodeAt(i)===55357) && (input.charCodeAt(i+1)===56475)){
+            if((input.charCodeAt(i)===56473) && (input.charCodeAt(i-1)===55357)){
                 i--;
                 console.log("found unmatched ]");
                 depthCounter++;
