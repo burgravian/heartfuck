@@ -198,13 +198,13 @@ function interpretHeartfuck() {
       // [
       else if (string.charCodeAt(i + 1) === 56475) {
         i++;
-        i=open(data, pointer, string, i);
+        i = open(data, pointer, string, i);
       }
 
       // ]
       else if (string.charCodeAt(i + 1) === 56473) {
         i++;
-        i=close(data, pointer, string, i);
+        i = close(data, pointer, string, i);
       }
     }
 
