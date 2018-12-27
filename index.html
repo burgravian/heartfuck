@@ -1,52 +1,252 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
   <title>Heartfuck</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/resume.css" rel="stylesheet">
+  <link href="css/heartfuck.css" rel="stylesheet">
+
 </head>
 
-<body>
-  <div class="row">
-    <div class="column">
-      <h1 class="title">HEARTFUCK</h2>
+<body id="page-top">
 
-        <p>
-          Enter heartfuck to convert to brainfuck:<br>
-          <textarea type='text' id='heartfuckToBrainfuck' rows="4" cols="75"></textarea><br>
-          <button onclick="runHeartfuckToBrainfuck(-1)">Convert to brainfuck</button>
-        </p>
-
-
-        <p>
-          Enter brainfuck to convert to heartfuck:<br>
-          <textarea type='text' id='brainfuckToHeartfuck' rows="4" cols="75"></textarea><br>
-          <button onclick="runBrainfuckToHeartfuck()">Convert to heartfuck</button>
-        </p>
-
-        <p>
-          Enter heartfuck to interpret:<br>
-          <textarea type='text' id='interpretHeartfuck' rows="4" cols="75"></textarea><br>
-          <button onclick="interpretHeartfuck()">Interpret</button>
-        </p>
-
-        <p>
-          Enter brainfuck to interpret:<br>
-          <textarea type='text' id='interpretBrainfuck' rows="4" cols="75"></textarea><br>
-          <button onclick="interpretBrainfuck(-1)">Interpret</button>
-        </p>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+      <span class="d-block d-lg-none">Heartfuck</span>
+      <span class="d-none d-lg-block">
+        <img class="img-fluid img-profile mx-auto mb-2" src="img/heart.png" alt="">
+      </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#run">Run heartfu️ck</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#text">Text to heartfuck</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#bf-hf">Brainfuck to heartfuck</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#hf-bf">Heartfuck to brainfuck</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#about">About</a>
+        </li>
+      </ul>
     </div>
+  </nav>
 
-    <div class="column">
-      <p id="output"></p>
-    </div>
+  <div class="container-fluid p-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex d-column" id="home">
+      <div class="my-auto">
+        <h1 class="mb-0">HEART<span class="text-primary">F❤️CK</span>
+        </h1>
+        <div class="subheading mb-5">The most wholesome "programming language"</div>
+        <p class="lead mb-5">by Laura Pircalaboiu and Ricardo Vogel.</p>
+        <div class="social-icons">
+          <a href="http://github.com/heartfuck/heartfuck">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://twitter.com/red_shifts">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="https://twitter.com/_ricardovogel_">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="run">
+      <div class="my-auto">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+
+              <h2 class="mb-5">Run heart<span class="text-primary">fuck</span></h2>
+              <textarea type="text" class="form-control" placeholder="Enter heartfuck to run" id="interpretHeartfuck"
+                rows="10"></textarea><br>
+              <button class="btn btn-pink" onclick="interpretHeartfuck()">Run</button>
+            </div>
+            <div class="col-sm hf-output-mobile">
+              <span class="hf-output" id="outputRUN"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="text">
+      <div class="my-auto">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+
+              <h2 class="mb-5">Convert text to Heart<span class="text-primary">fuck</span>
+              </h2>
+              <textarea type="text" class="form-control" placeholder="Enter text to convert" id="textToHeartfuck" rows="10"
+                disabled></textarea><br>
+              <button class="btn btn-pink" onclick="alert()" disabled>Convert</button>
+            </div>
+            <div class="col-sm hf-output-mobile">
+              <span class="hf-output" id="outputTXT"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section> -->
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="bf-hf">
+      <div class="my-auto">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+
+              <h2 class="mb-5">Brainfuck to Heart<span class="text-primary">fuck</span></h2>
+              </h2>
+              <textarea type="text" class="form-control" placeholder="Enter Brainfuck to convert" id="brainfuckToHeartfuck"
+                rows="10"></textarea><br>
+              <button class="btn btn-pink" onclick="runBrainfuckToHeartfuck()">Convert</button>
+            </div>
+            <div class="col-sm hf-output-mobile">
+              <span class="hf-output" id="outputBFHF"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="hf-bf">
+      <div class="my-auto">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+
+              <h2 class="mb-5">Heart<span class="text-primary">fuck</span> to brainfuck</h2>
+              </h2>
+              <textarea type="text" class="form-control" placeholder="Enter Heartfuck to convert" id="heartfuckToBrainfuck"
+                rows="10"></textarea><br>
+              <button class="btn btn-pink" onclick="runHeartfuckToBrainfuck()">Convert</button>
+            </div>
+            <div class="col-sm hf-output-mobile">
+              <span class="bf-output hf-output" id="outputHFBF"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="about">
+      <div class="my-auto">
+        <h2 class="mb-5">About Heart<span class="text-primary">fuck</span></h2>
+
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Heart<span class="text-primary">fuck</span></th>
+              <th scope="col">Brainfuck</th>
+              <th scope="col">Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">💗</th>
+              <td>&#62;</td>
+              <td>increment the data pointer (to point to the next cell to the right). </td>
+            </tr>
+            <tr>
+              <th scope="row">💜</th>
+              <td>&#60;</td>
+              <td>decrement the data pointer (to point to the next cell to the left). </td>
+            </tr>
+            <tr>
+              <th scope="row">💖</th>
+              <td>+</td>
+              <td>increment (increase by one) the byte at the data pointer. </td>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">❤️</th>
+              <td>-</td>
+              <td>decrement (decrease by one) the byte at the data pointer. </td>
+            </tr>
+            <tr>
+              <th scope="row">💌</th>
+              <td>.</td>
+              <td>output the byte at the data pointer. </td>
+            </tr>
+            <tr>
+              <th scope="row">❣️</th>
+              <td>,</td>
+              <td>accept one byte of input, storing its value in the byte at the data pointer. </td>
+            </tr>
+            <tr>
+              <th scope="row">💛</th>
+              <td>[</td>
+              <td>if the byte at the data pointer is zero, then instead of moving the instruction pointer forward to
+                the next command, jump it forward to the command after the 💙 command.</td>
+            </tr>
+            <tr>
+              <th scope="row">💙</th>
+              <td>]</td>
+              <td>if the byte at the data pointer is nonzero, then instead of moving the instruction pointer forward to
+                the next command, jump it back to the command after the matching 💛 command.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
   </div>
 
-  <script src="main.js"></script>
-  <script src="interpreting.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/main.js"></script>
+  <script src="js/interpreting.js"></script>
+  <script src="js/resume.min.js"></script>
 </body>
 
 </html>
