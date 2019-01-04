@@ -1,6 +1,7 @@
 # HEARTF❤️CK
 ### The most wholesome "programming language"
-by Laura Pircalaboiu and Ricardo Vogel
+by Laura Pircalaboiu and Ricardo Vogel  
+Python compiler by Jonathan Dönszelmann
 
 https://heartfuck.github.io/heartfuck/
 
