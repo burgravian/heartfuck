@@ -56,11 +56,12 @@ int main()[[[
                 try:
                     nxt.append(instructionmap[prgm[ipointer+offset]])
                 except KeyError:
+                    offset += 1
                     continue
                 except IndexError:
                     break
                 offset += 1
-                if offset == 3:
+                if len(nxt) == 2:
                     break
             if nxt == [5, 1]:
                 instructions.append("tape[dpointer] = 0\n")
@@ -193,11 +194,12 @@ def putchar(c):
                 try:
                     nxt.append(instructionmap[prgm[ipointer+offset]])
                 except KeyError:
+                    offset += 1
                     continue
                 except IndexError:
                     break
                 offset += 1
-                if offset == 3:
+                if len(nxt) == 2:
                     break
             if nxt == [5, 1]:
                 instructions.append(
@@ -327,15 +329,16 @@ def compiletobf(file, tapelength, instructionmap):
     with open(file, encoding='utf8') as f:
         prgm = f.read()
     brainfuck = {
-        "[": 0,
-        "]": 1,
-        ">": 2,
-        "<": 3,
-        "+": 4,
-        "-": 5,
-        ".": 6,
-        ",": 7,
+        0: "[",
+        1: "]",
+        2: ">",
+        3: "<",
+        4: "+",
+        5: "-",
+        6: ".",
+        7: ",",
     }
+
     res = []
     for i in prgm:
         try:
@@ -343,7 +346,7 @@ def compiletobf(file, tapelength, instructionmap):
             res.append(brainfuck[instr])
         except KeyError:
             continue
-    with open("temp.bf", "w") as f:
+    with open(os.path.join(path, "temp.bf"), "w") as f:
         f.write("".join(res))
 
 
@@ -358,7 +361,6 @@ if __name__ == "__main__":
         "💌": 6,
         "❣️": 7,
     }
-
     brainfuck = {
         "[": 0,
         "]": 1,
@@ -369,6 +371,7 @@ if __name__ == "__main__":
         ".": 6,
         ",": 7,
     }
+
     p = argparse.ArgumentParser(description="heartfuck compiler")
     p.add_argument("file", help="the file you want to compile")
     p.add_argument("-s", "--source",
@@ -395,11 +398,11 @@ if __name__ == "__main__":
         os.remove(os.path.join(path, "temp.py"))
     elif args.dest == "heartfuck":
         compiletohf(args.file, args.tape, lang)
-        copyfile("{0}/temp.hf", args.out)
+        copyfile("{0}/temp.hf".format(path), args.out)
         os.remove(os.path.join(path, "temp.hf"))
     elif args.dest == "brainfuck":
         compiletobf(args.file, args.tape, lang)
-        copyfile("{0}/temp.bf", args.out)
+        copyfile("{0}/temp.bf".format(path), args.out)
         os.remove(os.path.join(path, "temp.bf"))
     elif args.dest == "executable":
         compiletoc(args.file, args.tape, lang)
@@ -411,7 +414,9 @@ if __name__ == "__main__":
     elif args.dest == "run":
         compiletoc(args.file, args.tape, lang)
         os.system(
-            "{2} {1} -o {0}/temp.exe {0}/temp.c && {0}/temp.exe".format(path, GCCoptions, GCC))
+            "{2} {1} -o {0}/temp.exe {0}/temp.c".format(path, GCCoptions, GCC))
+        print("running:")
+        os.system("{0}/temp.exe".format(path))
         os.remove(os.path.join(path, "temp.c"))
         os.remove(os.path.join(path, "temp.exe"))
     # brainfuck setup
