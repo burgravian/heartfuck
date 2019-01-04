@@ -61,7 +61,7 @@ int main()[[[
                 except IndexError:
                     break
                 offset += 1
-                if offset == 3:
+                if len(nxt) == 2:
                     break
             if nxt == [5, 1]:
                 instructions.append("tape[dpointer] = 0\n")
@@ -199,7 +199,7 @@ def putchar(c):
                 except IndexError:
                     break
                 offset += 1
-                if offset == 3:
+                if len(nxt) == 2:
                     break
             if nxt == [5, 1]:
                 instructions.append(
