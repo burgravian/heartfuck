@@ -28,7 +28,7 @@ def compiletoc(file, tapelength, instructionmap):
     program = """
     # include <stdio.h>
 int main()[[[
-    int tape[{length}] = [[[0]]];
+    char tape[{length}] = [[[0]]];
     int dpointer = {length}/2;
 
 {nxt}
@@ -48,7 +48,6 @@ int main()[[[
             continue
         except IndexError:
             break
-
         if instr == 0:  # [
             nxt = []
             offset = 1
@@ -64,8 +63,8 @@ int main()[[[
                 if len(nxt) == 2:
                     break
             if nxt == [5, 1]:
-                instructions.append("tape[dpointer] = 0\n")
-                ipointer += 2
+                instructions.append("tape[dpointer] = 0;\n")
+                ipointer += (offset-1)
             else:
                 lb = next(lbl)
                 instructions.append("\tif(tape[dpointer] == 0)[[[goto END" + lb + ";]]]\n\tSTART" +
@@ -76,77 +75,13 @@ int main()[[[
             instructions.append(
                 "\tif(tape[dpointer] != 0)[[[goto START" + lb + ";]]]\n\tEND" + lb + ":;\n")
         elif instr == 2:  # >'
-            ammount = 1
-            offset = 1
-            while True:
-                try:
-                    instr = instructionmap[prgm[ipointer+offset]]
-                except KeyError:
-                    offset += 1
-                    continue
-                except IndexError:
-                    break
-                if instr == 2:
-                    offset += 1
-                    ammount += 1
-                else:
-                    break
-            ipointer += (ammount - 1)
-            instructions.append("\tdpointer+={};\n".format(ammount))
+            instructions.append("\tdpointer+=1;\n")
         elif instr == 3:  # <
-            ammount = 1
-            offset = 1
-            while True:
-                try:
-                    instr = instructionmap[prgm[ipointer+offset]]
-                except KeyError:
-                    offset += 1
-                    continue
-                except IndexError:
-                    break
-                if instr == 3:
-                    offset += 1
-                    ammount += 1
-                else:
-                    break
-            ipointer += (ammount - 1)
-            instructions.append("\tdpointer-={};\n".format(ammount))
+            instructions.append("\tdpointer-=1;\n")
         elif instr == 4:  # +
-            ammount = 1
-            offset = 1
-            while True:
-                try:
-                    instr = instructionmap[prgm[ipointer+offset]]
-                except KeyError:
-                    offset += 1
-                    continue
-                except IndexError:
-                    break
-                if instr == 4:
-                    offset += 1
-                    ammount += 1
-                else:
-                    break
-            ipointer += (ammount - 1)
-            instructions.append("\ttape[dpointer]+={};\n".format(ammount))
+            instructions.append("\ttape[dpointer]+=1;\n")
         elif instr == 5:  # -
-            ammount = 1
-            offset = 1
-            while True:
-                try:
-                    instr = instructionmap[prgm[ipointer+offset]]
-                except KeyError:
-                    offset += 1
-                    continue
-                except IndexError:
-                    break
-                if instr == 4:
-                    offset += 1
-                    ammount += 1
-                else:
-                    break
-            ipointer += (ammount - 1)
-            instructions.append("\ttape[dpointer]-={};\n".format(ammount))
+            instructions.append("\ttape[dpointer]-=1;\n")
         elif instr == 6:  # .
             instructions.append("\tputchar(tape[dpointer]);\n")
         elif instr == 7:  # ,
@@ -204,7 +139,7 @@ def putchar(c):
             if nxt == [5, 1]:
                 instructions.append(
                     "\t" * tabs + "tape[dpointer] = 0\n")
-                ipointer += 2
+                ipointer += (offset-1)
             else:
                 instructions.append(
                     "\t" * tabs + "while tape[dpointer] != 0:\n")
@@ -212,82 +147,15 @@ def putchar(c):
         elif instr == 1:  # ]
             tabs -= 1
         elif instr == 2:  # >
-            ammount = 1
-            offset = 1
-            while True:
-                try:
-                    instr = instructionmap[prgm[ipointer+offset]]
-                except KeyError:
-                    offset += 1
-                    continue
-                except IndexError:
-                    break
-                if instr == 2:
-                    offset += 1
-                    ammount += 1
-                else:
-                    break
-            ipointer += (ammount - 1)
-            instructions.append(
-                "\t" * tabs + "dpointer+={}\n".format(str(ammount)))
+            instructions.append("\t" * tabs + "dpointer+=1\n")
 
         elif instr == 3:  # <
-            ammount = 1
-            offset = 1
-            while True:
-                try:
-                    instr = instructionmap[prgm[ipointer+offset]]
-                except KeyError:
-                    offset += 1
-                    continue
-                except IndexError:
-                    break
-                if instr == 3:
-                    offset += 1
-                    ammount += 1
-                else:
-                    break
-            ipointer += (ammount - 1)
-            instructions.append(
-                "\t" * tabs + "dpointer-={}\n".format(str(ammount)))
+            instructions.append("\t" * tabs + "dpointer-=1\n")
         elif instr == 4:  # +
-            ammount = 1
-            offset = 1
-            while True:
-                try:
-                    instr = instructionmap[prgm[ipointer+offset]]
-                except KeyError:
-                    offset += 1
-                    continue
-                except IndexError:
-                    break
-                if instr == 4:
-                    ammount += 1
-                    offset += 1
-                else:
-                    break
-            ipointer += (ammount - 1)
             instructions.append(
-                "\t" * tabs + "tape[dpointer]+={}\n".format(str(ammount)))
+                "\t" * tabs + "tape[dpointer]+=1\n")
         elif instr == 5:  # -
-            ammount = 1
-            offset = 1
-            while True:
-                try:
-                    instr = instructionmap[prgm[ipointer+offset]]
-                except KeyError:
-                    offset += 1
-                    continue
-                except IndexError:
-                    break
-                if instr == 5:
-                    ammount += 1
-                    offset += 1
-                else:
-                    break
-            ipointer += (ammount - 1)
-            instructions.append(
-                "\t" * tabs + "tape[dpointer]-={}\n".format(str(ammount)))
+            instructions.append("\t" * tabs + "tape[dpointer]-=1\n")
         elif instr == 6:  # .
             instructions.append("\t" * tabs + "putchar(tape[dpointer])\n")
         elif instr == 7:  # ,
@@ -310,7 +178,7 @@ def compiletohf(file, tapelength, instructionmap):
         2: "💗",
         3: "💜",
         4: "💖",
-        5: "❤️",
+        5: "❤",
         6: "💌",
         7: "❣️",
     }
@@ -321,8 +189,8 @@ def compiletohf(file, tapelength, instructionmap):
             res.append(heartfuck[instr])
         except KeyError:
             continue
-    with open("temp.hf", "w") as f:
-        f.write("".join(res))
+    with open(os.path.join(path, "temp.hf"), "wb") as f:
+        f.write("".join(res).encode("utf-8"))
 
 
 def compiletobf(file, tapelength, instructionmap):
@@ -357,7 +225,7 @@ if __name__ == "__main__":
         "💗": 2,
         "💜": 3,
         "💖": 4,
-        "❤️": 5,
+        "❤": 5,
         "💌": 6,
         "❣️": 7,
     }
@@ -417,7 +285,7 @@ if __name__ == "__main__":
             compiletoc(args.file, args.tape, lang)
             os.system(
                 "{2} {1} -o {0}/temp.exe {0}/temp.c".format(path, GCCoptions, GCC))
-            copyfile("{0}/temp.exe", args.out)
+            copyfile("{0}/temp.exe".format(path), args.out)
         finally:
             os.remove(os.path.join(path, "temp.c"))
             os.remove(os.path.join(path, "temp.exe"))
