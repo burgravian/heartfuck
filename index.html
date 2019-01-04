@@ -232,6 +232,10 @@
             </tr>
           </tbody>
         </table>
+
+        <small>Heartfuck is &copy; <span id="copyrightnotice">2019</span> Laura Pircalaboiu and Ricardo Vogel under the
+          MIT License.
+          More information can be found <a href="https://github.com/heartfuck/heartfuck/blob/master/LICENSE.md">here</a>.</small>
       </div>
     </section>
 
@@ -248,6 +252,10 @@
   <script src="website/js/main.js"></script>
   <script src="website/js/interpreting.js"></script>
   <script src="website/js/resume.min.js"></script>
+
+  <script type="text/javascript">
+    document.getElementById("copyrightnotice").innerHTML = new Date().getFullYear();
+  </script>
 </body>
 
 </html>
