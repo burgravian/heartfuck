@@ -389,34 +389,46 @@ if __name__ == "__main__":
         lang = brainfuck
 
     if args.dest == "c":
-        compiletoc(args.file, args.tape, lang)
-        copyfile(os.path.join(path, "temp.c"), args.out)
-        os.remove(os.path.join(path, "temp.c"))
+        try:
+            compiletoc(args.file, args.tape, lang)
+            copyfile(os.path.join(path, "temp.c"), args.out)
+        finally:
+            os.remove(os.path.join(path, "temp.c"))
     elif args.dest == "python":
-        compiletopy(args.file, args.tape, lang)
-        copyfile(os.path.join(path, "temp.py"), args.out)
-        os.remove(os.path.join(path, "temp.py"))
+        try:
+            compiletopy(args.file, args.tape, lang)
+            copyfile(os.path.join(path, "temp.py"), args.out)
+        finally:
+            os.remove(os.path.join(path, "temp.py"))
     elif args.dest == "heartfuck":
-        compiletohf(args.file, args.tape, lang)
-        copyfile("{0}/temp.hf".format(path), args.out)
-        os.remove(os.path.join(path, "temp.hf"))
+        try:
+            compiletohf(args.file, args.tape, lang)
+            copyfile("{0}/temp.hf".format(path), args.out)
+        finally:
+            os.remove(os.path.join(path, "temp.hf"))
     elif args.dest == "brainfuck":
-        compiletobf(args.file, args.tape, lang)
-        copyfile("{0}/temp.bf".format(path), args.out)
-        os.remove(os.path.join(path, "temp.bf"))
+        try:
+            compiletobf(args.file, args.tape, lang)
+            copyfile("{0}/temp.bf".format(path), args.out)
+        finally:
+            os.remove(os.path.join(path, "temp.bf"))
     elif args.dest == "executable":
-        compiletoc(args.file, args.tape, lang)
-        os.system(
-            "{2} {1} -o {0}/temp.exe {0}/temp.c".format(path, GCCoptions, GCC))
-        copyfile("{0}/temp.exe", args.out)
-        os.remove(os.path.join(path, "temp.c"))
-        os.remove(os.path.join(path, "temp.exe"))
+        try:
+            compiletoc(args.file, args.tape, lang)
+            os.system(
+                "{2} {1} -o {0}/temp.exe {0}/temp.c".format(path, GCCoptions, GCC))
+            copyfile("{0}/temp.exe", args.out)
+        finally:
+            os.remove(os.path.join(path, "temp.c"))
+            os.remove(os.path.join(path, "temp.exe"))
     elif args.dest == "run":
-        compiletoc(args.file, args.tape, lang)
-        os.system(
-            "{2} {1} -o {0}/temp.exe {0}/temp.c".format(path, GCCoptions, GCC))
-        print("running:")
-        os.system("{0}/temp.exe".format(path))
-        os.remove(os.path.join(path, "temp.c"))
-        os.remove(os.path.join(path, "temp.exe"))
+        try:
+            compiletoc(args.file, args.tape, lang)
+            os.system(
+                "{2} {1} -o {0}/temp.exe {0}/temp.c".format(path, GCCoptions, GCC))
+            print("running:")
+            os.system("{0}/temp.exe".format(path))
+        finally:
+            os.remove(os.path.join(path, "temp.c"))
+            os.remove(os.path.join(path, "temp.exe"))
     # brainfuck setup
