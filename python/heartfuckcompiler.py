@@ -8,18 +8,11 @@ import sys
 import argparse
 from shutil import copyfile
 
-GCCoptions = "-O0"
+GCCoptions = "-O2"
 # make this your path to gcc
 GCC = "gcc"
 
 path = os.path.dirname(os.path.abspath(__file__))
-
-
-def genlabel():
-    i = 0
-    while True:
-        yield str(i)
-        i += 1
 
 
 def compiletoc(file, tapelength, instructionmap):
@@ -35,11 +28,8 @@ int main()[[[
 ]]]
     """.format(length=tapelength, nxt="{}")
 
-    lbl = iter(genlabel())
-
     instructions = []
     ipointer = -1
-    labels = []
     while True:
         ipointer += 1
         try:
@@ -63,17 +53,12 @@ int main()[[[
                 if len(nxt) == 2:
                     break
             if nxt == [5, 1]:
-                instructions.append("tape[dpointer] = 0;\n")
+                instructions.append("\ttape[dpointer] = 0;\n")
                 ipointer += (offset-1)
             else:
-                lb = next(lbl)
-                instructions.append("\tif(tape[dpointer] == 0)[[[goto END" + lb + ";]]]\n\tSTART" +
-                                    lb + ":;\n")
-                labels.append(lb)
+                instructions.append("\twhile(tape[dpointer] != 0)[[[\n")
         elif instr == 1:  # ]
-            lb = labels.pop()
-            instructions.append(
-                "\tif(tape[dpointer] != 0)[[[goto START" + lb + ";]]]\n\tEND" + lb + ":;\n")
+            instructions.append("\t]]]\n")
         elif instr == 2:  # >'
             instructions.append("\tdpointer+=1;\n")
         elif instr == 3:  # <
@@ -90,9 +75,42 @@ int main()[[[
     if len(instructions) == 0:
         print("Warning source format probably incorrect. still compiling...")
 
+    newinstructions = []
+    i = 0
+    while i < len(instructions):
+        if instructions[i] == "\ttape[dpointer]-=1;\n":
+            counter = 1
+            while i + counter < len(instructions) and instructions[i + counter] == "\ttape[dpointer]-=1;\n":
+                counter += 1
+            newinstructions.append("\ttape[dpointer]-={};\n".format(counter))
+            i += counter - 1
+        elif instructions[i] == "\ttape[dpointer]+=1;\n":
+            counter = 1
+            while i + counter < len(instructions) and instructions[i + counter] == "\ttape[dpointer]+=1;\n":
+                counter += 1
+            newinstructions.append("\ttape[dpointer]+={};\n".format(counter))
+            i += counter - 1
+        elif instructions[i] == "\tdpointer+=1;\n":
+            counter = 1
+            while i + counter < len(instructions) and instructions[i + counter] == "\tdpointer+=1;\n":
+                counter += 1
+            newinstructions.append("\tdpointer+={};\n".format(counter))
+            i += counter - 1
+        elif instructions[i] == "\tdpointer-=1;\n":
+            counter = 1
+            while i + counter < len(instructions) and instructions[i + counter] == "\tdpointer-=1;\n":
+                counter += 1
+            newinstructions.append("\tdpointer-={};\n".format(counter))
+            i += counter - 1
+        else:
+            newinstructions.append(instructions[i])
+        i += 1
+
+    res = program.format("".join(newinstructions)).replace(
+        "[[[", "{").replace("]]]", "}")
+
     with open(os.path.join(path, "temp.c"), "w") as f:
-        f.write(program.format("".join(instructions)).replace(
-            "[[[", "{").replace("]]]", "}"))
+        f.write(res)
 
 
 def compiletopy(file, tapelength, instructionmap):
@@ -146,6 +164,7 @@ def putchar(c):
                 tabs += 1
         elif instr == 1:  # ]
             tabs -= 1
+            instructions.append("\n")
         elif instr == 2:  # >
             instructions.append("\t" * tabs + "dpointer+=1\n")
 
@@ -164,8 +183,43 @@ def putchar(c):
     if len(instructions) == 0:
         print("Warning source format probably incorrect. still compiling...")
 
+    newinstructions = []
+    i = 0
+    while i < len(instructions):
+        if instructions[i].replace("\t", "") == "tape[dpointer]-=1\n":
+            counter = 1
+            while i + counter < len(instructions) and instructions[i + counter].replace("\t", "") == "tape[dpointer]-=1\n":
+                counter += 1
+            newinstructions.append(
+                "\t"*(instructions[i].count("\t")) + "tape[dpointer]-={}\n".format(counter))
+            i += counter - 1
+        elif instructions[i].replace("\t", "") == "tape[dpointer]+=1\n":
+            counter = 1
+            while i + counter < len(instructions) and instructions[i + counter].replace("\t", "") == "tape[dpointer]+=1\n":
+                counter += 1
+            newinstructions.append(
+                "\t"*(instructions[i].count("\t")) + "tape[dpointer]+={}\n".format(counter))
+            i += counter - 1
+        elif instructions[i].replace("\t", "") == "dpointer+=1\n":
+            counter = 1
+            while i + counter < len(instructions) and instructions[i + counter].replace("\t", "") == "dpointer+=1\n":
+                counter += 1
+            newinstructions.append(
+                "\t"*(instructions[i].count("\t")) + "dpointer+={}\n".format(counter))
+            i += counter - 1
+        elif instructions[i].replace("\t", "") == "dpointer-=1\n":
+            counter = 1
+            while i + counter < len(instructions) and instructions[i + counter].replace("\t", "") == "dpointer-=1\n":
+                counter += 1
+            newinstructions.append(
+                "\t"*(instructions[i].count("\t")) + "dpointer-={}\n".format(counter))
+            i += counter - 1
+        else:
+            newinstructions.append(instructions[i])
+        i += 1
+
     with open(os.path.join(path, "temp.py"), "w") as f:
-        f.write(program.format("".join(instructions)).replace(
+        f.write(program.format("".join(newinstructions)).replace(
             "[[[", "{").replace("]]]", "}"))
 
 
@@ -299,4 +353,3 @@ if __name__ == "__main__":
         finally:
             os.remove(os.path.join(path, "temp.c"))
             os.remove(os.path.join(path, "temp.exe"))
-    # brainfuck setup
