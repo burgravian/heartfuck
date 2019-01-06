@@ -223,6 +223,131 @@ def putchar(c):
             "[[[", "{").replace("]]]", "}"))
 
 
+def compiletojs(file, tapelength, instructionmap):
+    with open(file, encoding='utf8') as f:
+        prgm = f.read()
+    program = """
+
+var readline = require('readline');
+var rl = readline.createInterface([[[
+    input: process.stdin,
+    output: process.stdout
+]]]);
+
+async function input(msg)[[[
+    return new Promise(function(resolve, reject) [[[
+
+        console.log()
+        rl.question(msg,function(answer)[[[
+            resolve(answer,reject)
+        ]]])
+    ]]])
+]]]
+
+
+var tape = new Array({length}).fill(0);;
+var dpointer = Math.floor({length}/2);
+async function getchar()[[[
+    var res = await input(">>>")
+    return res.charCodeAt(0)
+]]]
+
+function putchar(c)[[[
+    rl.output.write(String.fromCharCode(c))
+]]]
+
+async function main()[[[
+
+{nxt}
+
+]]]
+
+main()
+    """.format(length=tapelength, nxt="{}")
+
+    instructions = []
+    ipointer = -1
+    while True:
+        ipointer += 1
+        try:
+            instr = instructionmap[prgm[ipointer]]
+        except KeyError:
+            continue
+        except IndexError:
+            break
+        if instr == 0:  # [
+            nxt = []
+            offset = 1
+            while True:
+                try:
+                    nxt.append(instructionmap[prgm[ipointer+offset]])
+                except KeyError:
+                    offset += 1
+                    continue
+                except IndexError:
+                    break
+                offset += 1
+                if len(nxt) == 2:
+                    break
+            if nxt == [5, 1]:
+                instructions.append("\ttape[dpointer] = 0;\n")
+                ipointer += (offset-1)
+            else:
+                instructions.append("\twhile(tape[dpointer] != 0)[[[\n")
+        elif instr == 1:  # ]
+            instructions.append("\t]]]\n")
+        elif instr == 2:  # >'
+            instructions.append("\tdpointer+=1;\n")
+        elif instr == 3:  # <
+            instructions.append("\tdpointer-=1;\n")
+        elif instr == 4:  # +
+            instructions.append("\ttape[dpointer]+=1;\n")
+        elif instr == 5:  # -
+            instructions.append("\ttape[dpointer]-=1;\n")
+        elif instr == 6:  # .
+            instructions.append("\tputchar(tape[dpointer]);\n")
+        elif instr == 7:  # ,
+            instructions.append("\ttape[dpointer] = await getchar();\n")
+
+    if len(instructions) == 0:
+        print("Warning source format probably incorrect. still compiling...")
+
+    newinstructions = []
+    i = 0
+    while i < len(instructions):
+        if instructions[i] == "\ttape[dpointer]-=1;\n":
+            counter = 1
+            while i + counter < len(instructions) and instructions[i + counter] == "\ttape[dpointer]-=1;\n":
+                counter += 1
+            newinstructions.append("\ttape[dpointer]-={};\n".format(counter))
+            i += counter - 1
+        elif instructions[i] == "\ttape[dpointer]+=1;\n":
+            counter = 1
+            while i + counter < len(instructions) and instructions[i + counter] == "\ttape[dpointer]+=1;\n":
+                counter += 1
+            newinstructions.append("\ttape[dpointer]+={};\n".format(counter))
+            i += counter - 1
+        elif instructions[i] == "\tdpointer+=1;\n":
+            counter = 1
+            while i + counter < len(instructions) and instructions[i + counter] == "\tdpointer+=1;\n":
+                counter += 1
+            newinstructions.append("\tdpointer+={};\n".format(counter))
+            i += counter - 1
+        elif instructions[i] == "\tdpointer-=1;\n":
+            counter = 1
+            while i + counter < len(instructions) and instructions[i + counter] == "\tdpointer-=1;\n":
+                counter += 1
+            newinstructions.append("\tdpointer-={};\n".format(counter))
+            i += counter - 1
+        else:
+            newinstructions.append(instructions[i])
+        i += 1
+
+    with open(os.path.join(path, "temp.js"), "w") as f:
+        f.write(program.format("".join(newinstructions)).replace(
+            "[[[", "{").replace("]]]", "}"))
+
+
 def compiletohf(file, tapelength, instructionmap):
     with open(file, encoding='utf8') as f:
         prgm = f.read()
@@ -299,7 +424,7 @@ if __name__ == "__main__":
     p.add_argument("-s", "--source",
                    choices=["heartfuck", "brainfuck"], help="source language")
     p.add_argument(
-        "-d", "--dest", choices=["python", "c", "heartfuck", "brainfuck", "executable", "run"], help="destination language")
+        "-d", "--dest", choices=["python", "c", "heartfuck", "brainfuck", "exe", "run", "javascript"], help="destination language")
     p.add_argument("-o", "--out", default=os.path.join(path,
                                                        "temp"), help="destination file")
     p.add_argument("-t", "--tape", type=int, default=30000, help="tape length")
@@ -322,6 +447,12 @@ if __name__ == "__main__":
             copyfile(os.path.join(path, "temp.py"), args.out)
         finally:
             os.remove(os.path.join(path, "temp.py"))
+    elif args.dest == "javascript":
+        try:
+            compiletojs(args.file, args.tape, lang)
+            copyfile(os.path.join(path, "temp.js"), args.out)
+        finally:
+            os.remove(os.path.join(path, "temp.js"))
     elif args.dest == "heartfuck":
         try:
             compiletohf(args.file, args.tape, lang)
@@ -334,7 +465,7 @@ if __name__ == "__main__":
             copyfile("{0}/temp.bf".format(path), args.out)
         finally:
             os.remove(os.path.join(path, "temp.bf"))
-    elif args.dest == "executable":
+    elif args.dest == "exe":
         try:
             compiletoc(args.file, args.tape, lang)
             os.system(
