@@ -24,16 +24,15 @@ function minus(data, pointer) {
     data[pointer]--;
 }
 
-function dot(data, pointer) {
-    document.getElementById('outputRUN').innerHTML += String.fromCharCode(data[pointer]);
+function dot(data, pointer, outputFieldID) {
+    document.getElementById(outputFieldID).innerHTML += String.fromCharCode(data[pointer]);
 }
 
-function comma(data, pointer) {
-    document.getElementById('outputRUN').innerHTML += "❣️";
+function comma(data, pointer, inputFieldID) {
+    document.getElementById(inputFieldID).innerHTML += "❣️";
 }
 
 function open(data, pointer, input, i) {
-    //document.getElementById('output').innerHTML += "💛NOT IMPLEMENTED💛";
     data[pointer] = data[pointer] || 0;
     if (data[pointer] === 0) {
         var depthCounter = 1;
@@ -55,7 +54,6 @@ function open(data, pointer, input, i) {
     return i;
 }
 function close(data, pointer, input) {
-    //document.getElementById('output').innerHTML += "💙NOT IMPLEMENTED💙";
     data[pointer] = data[pointer] || 0;
     if (data[pointer] !== 0) {
         var depthCounter = 1;

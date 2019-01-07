@@ -76,36 +76,36 @@ function convertToDiscord() {
   var string = document.getElementById('tagsToHeartfuck').value;
   var split = string.split(":");
 
-    for (i = 0; i < split.length; i++) {
-      if(!split[i].includes(" ")&&split[i]!==null&&split[i]!==undefined){                  
-        switch (split[i]) {
-          case "heartpulse":
-            output += "💗";
-            break;
-          case "purple_heart":
-            output += "💜";
-            break;
-          case "sparkling_heart":
-            output += "💖";
-            break;
-          case "heart":
-            output += "❤️";
-            break;
-          case "love_letter":
-            output += "💌";
-            break;
-          case "heart_exclamation":
-            output += "❣️";
-            break;
-          case "yellow_heart":
-            output += "💛";
-            break;
-          case "blue_heart":
-            output += "💙";
-            break;
-        }
+  for (i = 0; i < split.length; i++) {
+    if (!split[i].includes(" ") && split[i] !== null && split[i] !== undefined) {
+      switch (split[i]) {
+        case "heartpulse":
+          output += "💗";
+          break;
+        case "purple_heart":
+          output += "💜";
+          break;
+        case "sparkling_heart":
+          output += "💖";
+          break;
+        case "heart":
+          output += "❤️";
+          break;
+        case "love_letter":
+          output += "💌";
+          break;
+        case "heart_exclamation":
+          output += "❣️";
+          break;
+        case "yellow_heart":
+          output += "💛";
+          break;
+        case "blue_heart":
+          output += "💙";
+          break;
       }
     }
+  }
 
   document.getElementById('outputDSC').innerHTML = output;
   return output;
@@ -220,7 +220,7 @@ function interpretHeartfuck() {
       //.
       else if (string.charCodeAt(i + 1) === 56460) {
         i++;
-        dot(data, pointer);
+        dot(data, pointer, "outputRUN");
       }
 
       // [
@@ -248,7 +248,7 @@ function interpretHeartfuck() {
     else if (string.charCodeAt(i) === 10083) {
       if (string.charCodeAt(i + 1) === 65039) {
         i++;
-        comma(data, pointer);
+        comma(data, pointer, "outputRUN");
       }
     }
   }
