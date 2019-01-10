@@ -190,15 +190,32 @@ function runBrainfuckToHeartfuck() {
 function textToHeartfuck() {
   var output = "";
   var string = document.getElementById('textToHeartfuck').value;
-  for (i = 0; i < string.length; i++) {
+
+  for (let i = 0; i < string.length; i++) {
+    output += "💗";
     let asc = string.charCodeAt(i);
-    console.log(asc);
-    for (let j = 0; j < asc; j++) {
-      output += "💖";
+    if (asc < 10) {
+      for (let j = 0; j < asc; j++) {
+        output += "💖";
+      }
+      output += "💌💗";
     }
-    output += "💌";
-    for (let j = 0; j < asc; j++) {
-      output += "❤️";
+    else {
+      let root = parseInt(Math.floor(Math.sqrt(asc)));
+      for (let i = 0; i < root; i++) {
+        output += "💖";
+      }
+      output += "💛💗";
+      let quotient = parseInt(Math.floor(asc / root));
+      for (let i = 0; i < quotient; i++) {
+        output += "💖";
+      }
+      output += "💜❤️💙💗";
+      let remainder = asc - (root * quotient);
+      for (let i = 0; i < remainder; i++) {
+        output += "💖";
+      }
+      output += "💌";
     }
   }
   document.getElementById('outputTXT').innerHTML = output;
