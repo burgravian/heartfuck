@@ -242,3 +242,41 @@ function interpretHeartfuck() {
     }
   }
 }
+
+function copyOutputToClipBoard(button) {
+  //temporarily disable event on this button
+  $(button).css("pointer-events", "none");
+
+  //vars
+  var output = $(button).parent().parent().find(".hf-output")[0];
+  var tmpTextArea = document.createElement("textarea");
+  
+  //Actual copy code
+  tmpTextArea.value = output.textContent;
+  document.body.appendChild(tmpTextArea);
+  tmpTextArea.select();
+  document.execCommand("copy");
+  tmpTextArea.remove();
+
+  //Transition
+  $(button).css("width" , $(button).outerWidth());
+  $(button).css("height" , $(button).outerHeight());
+  $(button).children().fadeOut(400, function(){
+    $(button).children()[0].textContent = "Copied!";
+      
+    $(button).children().fadeIn(400,"linear",function(){
+        setTimeout(function(){
+          $(button).children().fadeOut(400,function(){
+            $(button).children()[0].textContent = "Copy output"
+            $(button).children().fadeIn(400,"linear", function(){
+              
+              $(button).css({"width" : "",
+                             "height" : "",
+                             "pointer-events": ""});
+           });
+         });
+     },1500);
+    });
+  });
+
+}
