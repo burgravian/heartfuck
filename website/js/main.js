@@ -218,6 +218,7 @@ function textToHeartfuck() {
       output += "💌";
     }
   }
+  console.log("oof");
   document.getElementById('outputTXT').innerHTML = output;
   return output;
 }
