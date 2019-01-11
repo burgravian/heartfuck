@@ -4,49 +4,42 @@ function runHeartfuckToBrainfuck() {
   var string = document.getElementById('heartfuckToBrainfuck').value;
 
   for (i = 0; i < string.length; i++) {
-    console.log(i + ": " + string.charCodeAt(i));
 
     // < > + [ ]
     if (string.charCodeAt(i) === 55357) {
       // >
       if (string.charCodeAt(i + 1) === 56471) {
         i++;
-        console.log(i + ": " + string.charCodeAt(i));
         output += ">";
       }
 
       // <
       else if (string.charCodeAt(i + 1) === 56476) {
         i++;
-        console.log(i + ": " + string.charCodeAt(i));
         output += "<";
       }
 
       // +
       else if (string.charCodeAt(i + 1) === 56470) {
         i++;
-        console.log(i + ": " + string.charCodeAt(i));
         output += "+";
       }
 
       //.
       else if (string.charCodeAt(i + 1) === 56460) {
         i++;
-        console.log(i + ": " + string.charCodeAt(i));
         output += ".";
       }
 
       // [
       else if (string.charCodeAt(i + 1) === 56475) {
         i++;
-        console.log(i + ": " + string.charCodeAt(i));
         output += "[";
       }
 
       // ]
       else if (string.charCodeAt(i + 1) === 56473) {
         i++;
-        console.log(i + ": " + string.charCodeAt(i));
         output += "]";
       }
     }
@@ -149,44 +142,7 @@ function runBrainfuckToHeartfuck() {
   return output;
 }
 
-/* function interpretBrainfuck() {
-  var data = [];
-  var pointer = 0;
 
-  document.getElementById('output').innerHTML = "";
-
-  var input = document.getElementById('interpretBrainfuck').value;
-
-  for (i = 0; i < input.length; i++) {
-    switch (input.charAt(i)) {
-      case ">":
-        pointer = pointRight(data, pointer);
-        break;
-      case "<":
-        pointer = pointLeft(data, pointer);
-        break;
-      case "+":
-        plus(data, pointer);
-        break;
-      case "-":
-        minus(data, pointer);
-        break;
-      case ".":
-        dot(data, pointer);
-        break;
-      case ",":
-        comma(data, pointer);
-        break;
-      case "[":
-        open(data, pointer);
-        break;
-      case "]":
-        close(data, pointer);
-        break;
-    }
-  }
-}
-*/
 function textToHeartfuck() {
   var output = "";
   var string = document.getElementById('textToHeartfuck').value;
@@ -230,7 +186,6 @@ function interpretHeartfuck() {
   document.getElementById('outputRUN').innerHTML = "";
 
   for (i = 0; i < string.length; i++) {
-    console.log(i);
     // < > + [ ]
     if (string.charCodeAt(i) === 55357) {
       // >
@@ -254,7 +209,7 @@ function interpretHeartfuck() {
       //.
       else if (string.charCodeAt(i + 1) === 56460) {
         i++;
-        dot(data, pointer);
+        dot(data, pointer, "outputRUN");
       }
 
       // [
@@ -282,18 +237,8 @@ function interpretHeartfuck() {
     else if (string.charCodeAt(i) === 10083) {
       if (string.charCodeAt(i + 1) === 65039) {
         i++;
-        comma(data, pointer);
+        comma(data, pointer, "outputRUN");
       }
     }
   }
-}
-
-function makeid() {
-  var text = "";
-  var possible = "abcdefghijklmnopqrstuvwxyz";
-
-  for (var i = 0; i < 5; i++)
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-  return text;
 }
