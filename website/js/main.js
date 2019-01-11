@@ -142,6 +142,42 @@ function runBrainfuckToHeartfuck() {
   return output;
 }
 
+
+function textToHeartfuck() {
+  var output = "";
+  var string = document.getElementById('textToHeartfuck').value;
+
+  for (let i = 0; i < string.length; i++) {
+    output += "💗";
+    let asc = string.charCodeAt(i);
+    if (asc < 10) {
+      for (let j = 0; j < asc; j++) {
+        output += "💖";
+      }
+      output += "💌💗";
+    }
+    else {
+      let root = parseInt(Math.floor(Math.sqrt(asc)));
+      for (let i = 0; i < root; i++) {
+        output += "💖";
+      }
+      output += "💛💗";
+      let quotient = parseInt(Math.floor(asc / root));
+      for (let i = 0; i < quotient; i++) {
+        output += "💖";
+      }
+      output += "💜❤️💙💗";
+      let remainder = asc - (root * quotient);
+      for (let i = 0; i < remainder; i++) {
+        output += "💖";
+      }
+      output += "💌";
+    }
+  }
+  document.getElementById('outputTXT').innerHTML = output;
+  return output;
+}
+
 function interpretHeartfuck() {
   var data = [];
   var pointer = 0;
