@@ -24,52 +24,45 @@ function minus(data, pointer) {
     data[pointer]--;
 }
 
-function dot(data, pointer) {
-    document.getElementById('outputRUN').innerHTML += String.fromCharCode(data[pointer]);
+function dot(data, pointer, outputFieldID) {
+    document.getElementById(outputFieldID).innerHTML += String.fromCharCode(data[pointer]);
 }
 
-function comma(data, pointer) {
-    document.getElementById('outputRUN').innerHTML += "❣️";
+function comma(data, pointer, inputFieldID) {
+    document.getElementById(inputFieldID).innerHTML += "❣️";
 }
 
 function open(data, pointer, input, i) {
-    //document.getElementById('output').innerHTML += "💛NOT IMPLEMENTED💛";
     data[pointer] = data[pointer] || 0;
     if (data[pointer] === 0) {
         var depthCounter = 1;
-        console.log("Found a start loop at " + i);
         while (depthCounter !== 0) {
             i++;
             if ((input.charCodeAt(i) === 55357) && (input.charCodeAt(i + 1) === 56475)) {
                 i++;
-                console.log("found unmatched [");
                 depthCounter++;
             }
             if ((input.charCodeAt(i) === 55357) && (input.charCodeAt(i + 1) === 56473)) {
                 i++;
-                console.log("found matching ]");
                 depthCounter--;
             }
         }
     }
     return i;
 }
+
 function close(data, pointer, input) {
-    //document.getElementById('output').innerHTML += "💙NOT IMPLEMENTED💙";
     data[pointer] = data[pointer] || 0;
     if (data[pointer] !== 0) {
         var depthCounter = 1;
-        console.log("found an end loop at " + i);
         while (depthCounter !== 0) {
             i--;
             if ((input.charCodeAt(i) === 56475) && (input.charCodeAt(i - 1) === 55357)) {
                 i--;
-                console.log("found matching [");
                 depthCounter--;
             }
             if ((input.charCodeAt(i) === 56473) && (input.charCodeAt(i - 1) === 55357)) {
                 i--;
-                console.log("found unmatched ]");
                 depthCounter++;
             }
         }
