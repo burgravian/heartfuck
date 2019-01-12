@@ -244,7 +244,7 @@ function interpretHeartfuck() {
 }
 
 function copyOutputToClipBoard(button) {
-  //temporarily disable event on this button
+  //temporarily disable pointer-events on this button
   $(button).css("pointer-events", "none");
 
   //vars
@@ -278,5 +278,8 @@ function copyOutputToClipBoard(button) {
      },1500);
     });
   });
+}
 
+function clearTextArea(button){
+    $(button).siblings(".Input")[0].value = "";
 }
