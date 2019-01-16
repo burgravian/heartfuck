@@ -97,10 +97,11 @@
             <div class="col-sm">
 
               <h2 class="mb-5">Run heart<span class="text-primary">fuck</span></h2>
-              <textarea type="text" class="form-control" placeholder="Enter heartfuck to run" id="interpretHeartfuck"
+              <textarea type="text" class="form-control Input" placeholder="Enter heartfuck to run" id="interpretHeartfuck"
                 rows="10"></textarea><br>
               <button class="btn btn-pink" onclick="interpretHeartfuck()">Run</button>
               <button class="btn btn-pink" onclick="copyOutputToClipBoard(this)"><span>Copy output<span></button>
+              <button class="btn btn-pink" onclick="clearTextArea(this)">Clear input</button>
             </div>
             <div class="col-sm hf-output-mobile">
               <span class="hf-output" id="outputRUN"></span>
@@ -120,9 +121,10 @@
 
               <h2 class="mb-5">Convert text to Heart<span class="text-primary">fuck</span>
               </h2>
-              <textarea type="text" class="form-control" placeholder="Enter text to convert" id="textToHeartfuck" rows="10"></textarea><br>
+              <textarea type="text" class="form-control Input" placeholder="Enter text to convert" id="textToHeartfuck" rows="10"></textarea><br>
               <button class="btn btn-pink" onclick="textToHeartfuck()">Convert</button>
               <button class="btn btn-pink" onclick="copyOutputToClipBoard(this)"><span>Copy output<span></button>
+              <button class="btn btn-pink" onclick="clearTextArea(this)">Clear input</button>
             </div>
             <div class="col-sm hf-output-mobile">
               <span class="hf-output" id="outputTXT"></span>
@@ -142,10 +144,11 @@
 
               <h2 class="mb-5">Brainfuck to Heart<span class="text-primary">fuck</span></h2>
               </h2>
-              <textarea type="text" class="form-control" placeholder="Enter Brainfuck to convert" id="brainfuckToHeartfuck"
+              <textarea type="text" class="form-control Input" placeholder="Enter Brainfuck to convert" id="brainfuckToHeartfuck"
                 rows="10"></textarea><br>
               <button class="btn btn-pink" onclick="runBrainfuckToHeartfuck()">Convert</button>
               <button class="btn btn-pink" onclick="copyOutputToClipBoard(this)"><span>Copy output<span></button>
+              <button class="btn btn-pink" onclick="clearTextArea(this)">Clear input</button>
             </div>
             <div class="col-sm hf-output-mobile">
               <span class="hf-output" id="outputBFHF"></span>
@@ -165,10 +168,11 @@
 
               <h2 class="mb-5">Discord tags to Heart<span class="text-primary">fuck</span>
               </h2>
-              <textarea type="text" class="form-control" placeholder="Enter Discord tags to convert" id="tagsToHeartfuck"
+              <textarea type="text" class="form-control Input" placeholder="Enter Discord tags to convert" id="tagsToHeartfuck"
                 rows="10"></textarea><br>
               <button class="btn btn-pink" onclick="convertToDiscord()">Convert</button>
               <button class="btn btn-pink" onclick="copyOutputToClipBoard(this)"><span>Copy output<span></button>
+              <button class="btn btn-pink" onclick="clearTextArea(this)">Clear input</button>
             </div>
             <div class="col-sm hf-output-mobile">
               <span class="hf-output" id="outputDSC"></span>
@@ -188,10 +192,11 @@
 
               <h2 class="mb-5">Heart<span class="text-primary">fuck</span> to brainfuck</h2>
               </h2>
-              <textarea type="text" class="form-control" placeholder="Enter Heartfuck to convert" id="heartfuckToBrainfuck"
+              <textarea type="text" class="form-control Input" placeholder="Enter Heartfuck to convert" id="heartfuckToBrainfuck"
                 rows="10"></textarea><br>
               <button class="btn btn-pink" onclick="runHeartfuckToBrainfuck()">Convert</button>
               <button class="btn btn-pink" onclick="copyOutputToClipBoard(this)"><span>Copy output<span></button>
+              <button class="btn btn-pink" onclick="clearTextArea(this)">Clear input</button>
 
             </div>
             <div class="col-sm hf-output-mobile">
