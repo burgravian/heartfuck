@@ -182,6 +182,7 @@ function interpretHeartfuck() {
   var data = [];
   var pointer = 0;
   var string = document.getElementById('interpretHeartfuck').value;
+  var inputCounter = 0;
 
   document.getElementById('outputRUN').innerHTML = "";
 
@@ -237,7 +238,8 @@ function interpretHeartfuck() {
     else if (string.charCodeAt(i) === 10083) {
       if (string.charCodeAt(i + 1) === 65039) {
         i++;
-        comma(data, pointer, "outputRUN");
+        comma(data, pointer, "dataInput", inputCounter);
+        inputCounter++;
       }
     }
   }
@@ -250,7 +252,7 @@ function copyOutputToClipBoard(button) {
   //vars
   var output = $(button).parent().parent().find(".hf-output")[0];
   var tmpTextArea = document.createElement("textarea");
-  
+
   //Actual copy code
   tmpTextArea.value = output.textContent;
   document.body.appendChild(tmpTextArea);
@@ -259,27 +261,33 @@ function copyOutputToClipBoard(button) {
   tmpTextArea.remove();
 
   //Transition
-  $(button).css("width" , $(button).outerWidth());
-  $(button).css("height" , $(button).outerHeight());
-  $(button).children().fadeOut(400, function(){
+  $(button).css("width", $(button).outerWidth());
+  $(button).css("height", $(button).outerHeight());
+  $(button).children().fadeOut(400, function () {
     $(button).children()[0].textContent = "Copied!";
-      
-    $(button).children().fadeIn(400,"linear",function(){
-        setTimeout(function(){
-          $(button).children().fadeOut(400,function(){
-            $(button).children()[0].textContent = "Copy output"
-            $(button).children().fadeIn(400,"linear", function(){
-              
-              $(button).css({"width" : "",
-                             "height" : "",
-                             "pointer-events": ""});
-           });
-         });
-     },1500);
+
+    $(button).children().fadeIn(400, "linear", function () {
+      setTimeout(function () {
+        $(button).children().fadeOut(400, function () {
+          $(button).children()[0].textContent = "Copy output"
+          $(button).children().fadeIn(400, "linear", function () {
+
+            $(button).css({
+              "width": "",
+              "height": "",
+              "pointer-events": ""
+            });
+          });
+        });
+      }, 1500);
     });
   });
 }
 
-function clearTextArea(button){
-    $(button).siblings(".Input")[0].value = "";
+function clearTextArea(button) {
+  $(button).siblings(".Input")[0].value = "";
+}
+
+function clearInputArea() {
+  document.getElementById("dataInput").value = "";
 }

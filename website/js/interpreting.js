@@ -28,8 +28,9 @@ function dot(data, pointer, outputFieldID) {
     document.getElementById(outputFieldID).innerHTML += String.fromCharCode(data[pointer]);
 }
 
-function comma(data, pointer, inputFieldID) {
-    document.getElementById(inputFieldID).innerHTML += "❣️";
+function comma(data, pointer, inputFieldID, inputCounter) {
+    var char = document.getElementById(inputFieldID).value.charCodeAt(inputCounter);
+    data[pointer] = char || 0;
 }
 
 function open(data, pointer, input, i) {
